@@ -40,6 +40,7 @@ route serves as the key, TokenBucket instance for the route serves as the value
 app.use('/', createRateLimiterRoutes(tokenBuckets));
 
 // Set interval to periodically refill tokens
+// In a production environment, we would use a more sophisticated scheduling mechanism like cron jobs
 setInterval(() => refillAllBuckets(tokenBuckets), 500); // Check every half-second
 
 /**
@@ -53,6 +54,7 @@ setInterval(() => refillAllBuckets(tokenBuckets), 500); // Check every half-seco
  * @param {Function} next - The next middleware function.
  */
 app.use((err, req, res, next) => {
+    // TODO: Could send logs every so often instead of right away to reduce I/O
     console.error(err.stack); // Log the error stack trace for debugging purposes
     res.status(500).send('Something went wrong!'); // Send a 500 Internal Server Error response
 });

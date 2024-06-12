@@ -6,7 +6,7 @@
 */
 
 /**
- * Represents a token bucket for rate limiting.
+ * Represents a token bucket for rate limiting. A 'token' is synonymous with a request.
  * A token bucket is a mechanism that controls how many requests a user can make within a certain period of time.
  * It allows for bursts of requests to be made in a short period of time while enforcing a steady rate of requests over a longer period.
  */

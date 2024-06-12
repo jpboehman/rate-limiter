@@ -22,7 +22,7 @@ Request Initiation
  │   app.use('/', createRateLimiterRoutes(tokenBuckets))         │
  ├──────────────────────────────────────────────────────────────┤
  │ Applies rate limiting to the routes defined by                │
- │ createRateLimiterRoutes.                                       │
+ │ createRateLimiterRoutes. (API Router at this path)            │
  │ - Manages and enforces rate limits based on the token         │
  │   buckets configuration.                                       │
  │ - If the rate limit is exceeded, returns a response           │
@@ -40,3 +40,8 @@ Request Initiation
  │ - Logs the error stack trace for debugging purposes.          │
  │ - Sends error response with the error status and message.     │
  └──────────────────────────────────────────────────────────────┘
+
+
+WOULD HAVE DONE DIFFERENTLY:
+- Leveraged Rate-Limiting middleware - including logic to forward the request if tokens are available
+- 
