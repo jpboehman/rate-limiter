@@ -5,6 +5,10 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+/**
+ * Loads configuration from config.json file.
+ * @returns {Object} - The configuration object.
+ */
 export const loadConfig = () => {
     try {
         // Load configuration from config.json at server startup to get rate limits for each endpoint

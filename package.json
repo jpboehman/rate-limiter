@@ -2,7 +2,7 @@
   "name": "take-home-assessment",
   "version": "1.0.0",
   "description": "",
-  "main": "main.mjs",
+  "main": "index.mjs",
   "type": "module",
   "scripts": {
     "start": "nodemon main.mjs",
