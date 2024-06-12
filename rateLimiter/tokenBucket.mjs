@@ -1,3 +1,10 @@
+/*
+    Chose to implement the TokenBucket as a class to encapsulate all the data and behavior related to token bucket management. 
+    This approach provides several advantages: it encapsulates the state and logic within a single unit, making the code more modular and maintainable. 
+    It also promotes reusability, as we can instantiate multiple token buckets for different endpoints without duplicating code. 
+    The class structure enhances readability and follows object-oriented principles, allowing for future extensibility.
+*/
+
 /**
  * Represents a token bucket for rate limiting.
  * A token bucket is a mechanism that controls how many requests a user can make within a certain period of time.

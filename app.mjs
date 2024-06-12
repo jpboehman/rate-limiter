@@ -32,6 +32,10 @@ route serves as the key, TokenBucket instance for the route serves as the value
 }
 */
 
+// Middleware for authentication - calling BEFORE creating rate limiter routes
+// In Express, middleware functions are executed in the order they're defined
+// app.use(authMiddleware);
+
 // Mount rate limiter routes at the root of the application
 app.use('/', createRateLimiterRoutes(tokenBuckets));
 
