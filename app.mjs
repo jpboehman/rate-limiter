@@ -11,6 +11,10 @@ import { createRateLimiterRoutes } from './routes/rateLimiterRoutes.mjs';
 const app = express();
 
 // Middleware to parse incoming requests with JSON payloads
+// TODO:
+// What I would've done - placed all middleware in an AWS Lambda for code reuse
+// Also, would've used a more sophisticated logging mechanism like AWS CloudWatch
+// as well as a more secure way to store secrets like AWS Secrets Manager
 app.use(express.json());
 // TODO: Would also add middleware for logging, security, authorization, etc.
 
@@ -35,6 +39,12 @@ route serves as the key, TokenBucket instance for the route serves as the value
 // Middleware for authentication - calling BEFORE creating rate limiter routes
 // In Express, middleware functions are executed in the order they're defined
 // app.use(authMiddleware);
+
+// In practicality for an API, rate-limiting is an excellent candiddate for middleware
+// as it's a cross-cutting concern that applies to all routes
+// This is why we're creating the rate limiter routes AFTER the authentication middleware
+// Additionally, it makes sense for us to host an AWS Lammbda Layer for our middleware functions:
+// (authentication, caching, rate-limiting, request-logging, etc)
 
 // Mount rate limiter routes at the root of the application
 app.use('/', createRateLimiterRoutes(tokenBuckets));
