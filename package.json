@@ -5,7 +5,7 @@
   "main": "index.mjs",
   "type": "module",
   "scripts": {
-    "start": "nodemon main.mjs",
+    "start": "nodemon index.mjs",
     "test": "mocha --experimental-modules --timeout 10000 specs/server.spec.mjs"
   },
   "keywords": [],
