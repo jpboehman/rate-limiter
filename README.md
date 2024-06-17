@@ -44,4 +44,10 @@ Request Initiation
 
 WOULD HAVE DONE DIFFERENTLY:
 - Leveraged Rate-Limiting middleware - including logic to forward the request if tokens are available
-- 
+- Implemented BOTH:
+  - Redis for Real-Time Rate-Limiting
+    - Store token bucket counters in Redis for quick access
+    - Perform all rate-limiting checks and updates DIRECTLY in Redis since we need low-latency
+  - Periodically sync Redis state with DynamoDB
+    - Periodically (every x seconds, every minute) sync the state of the token buckets from Redis -> DynamoDB
+    - Ensures that the state is durable and can be restored in the case of a Redis failure

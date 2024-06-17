@@ -10,6 +10,7 @@ const router = express.Router();
 export const createRateLimiterRoutes = (tokenBuckets) => {
     // Route to check rate limits and consume tokens for the specified route
     // NOTE: Added error-handling middleware to catch any errors that occur during the route handling - see app.mjs (centralizes error handling)
+    // TODO: Could also add middleware to place the request into a queue to eventually update the DynamoDB state
     router.post('/take', (req, res, next) => {
         try {
             const routeTemplate = req.body.endpoint;

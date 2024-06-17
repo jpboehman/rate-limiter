@@ -7,7 +7,6 @@ import express from 'express';
 import { loadConfig } from './config/configLoader.mjs';
 import { initializeTokenBuckets, refillAllBuckets } from './rateLimiter/rateLimiter.mjs';
 import { createRateLimiterRoutes } from './routes/rateLimiterRoutes.mjs';
-import { authMiddleware } from './middleware/authMiddlware.mjs';
 
 const app = express();
 
@@ -38,15 +37,11 @@ route serves as the key, TokenBucket instance for the route serves as the value
 }
 */
 
-// Middleware for authentication - calling BEFORE creating rate limiter routes
-// In Express, middleware functions are executed in the order they're defined
+// Either in Lambda Layer or API Gateway, would use middleware for authentication
 // app.use(authMiddleware)
 
 // In practicality for an API, rate-limiting is an excellent candiddate for middleware
 // as it's a cross-cutting concern that applies to all routes
-// This is why we're creating the rate limiter routes AFTER the authentication middleware
-// Additionally, it makes sense for us to host an AWS Lammbda Layer for our middleware functions:
-// (authentication, caching, rate-limiting, request-logging, etc)
 
 // Mount rate limiter routes at the root of the application
 app.use('/', createRateLimiterRoutes(tokenBuckets));
@@ -75,7 +70,8 @@ export default app;
 
 // An advantage of using API Gateway over Lambda Layers is that we can use API Gateway
 // to handle / implement ALL of our middleware functions (authentication, caching, rate-limiting, etc)
-// across all of our Lambda functions. This way, we can keep our Lambda functions clean and focused, and don't
+// across all of our Lambda functions. 
+// This way, we can keep our Lambda functions clean and focused, and don't
 // even need to import the middleware functions into our Lambda functions. We can also use API Gateway to
 // manage our middleware functions in a centralized location, and we can easily enable or disable them for
 // specific endpoints or services. This approach also allows us to easily scale our middleware functions

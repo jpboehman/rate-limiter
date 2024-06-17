@@ -67,9 +67,30 @@ export class TokenBucket {
     The class structure enhances readability and follows object-oriented principles, allowing for future extensibility.
 */
 
+/*
+- Advantages
+    - This algorithm can cause a burst of traffic as long as there are enough tokens in the bucket.
+    - It is space efficient. The memory needed for the algorithm is nominal due to limited states.
+- Disadvantages
+    - Choosing an optimal value for the essential parameters is a difficult task.
+*/
+
+// Sliding Window log:
+    // The sliding window algorithm is a common approach to rate limiting that divides time into fixed-size intervals (windows) and tracks the number of requests made within each window.
+    // The algorithm maintains a log of timestamps for each request and counts the number of requests that fall within the current window.
+    // If the number of requests exceeds the limit, the algorithm rejects the request; otherwise, it allows the request and updates the log.
+    // The sliding window algorithm is more memory-intensive than the token bucket algorithm, as it requires storing timestamps for each request.
+    // However, it provides more fine-grained control over the rate limiting, allowing for precise enforcement of request limits.
+
 /**
- * TODO: Can use AWS DynamoDB to store the token bucket state for persistence across server restarts.
- * - Low latency, high availability, and scalability
+ * TODO: Can use Redis + AWS DynamoDB to store the token bucket state for persistence across server restarts.
+ * - DynamoDB is designed for HIGH-AVAILABILITY + LOW LATENCY operations, making it ideal for real-time applications like rate-limiting and tracking bucket state.
+ * - TTL (Time to Live): Automatically expire items after a certain period, which is useful for cleaning up old bucket states.
+ * 
+ * - Streams: DynamoDB Streams can be used to trigger AWS Lambda functions on data changes, useful for event-driven architectures.
+ * - NOTE: Idempotency is more challenging to achieve when using a distributed system like DynamoDB, as multiple requests can update the same bucket concurrently.
+ * - To alleviate that, we can use conditional writes (e.g., UpdateItem with ConditionExpression) to ensure that only one request updates the bucket at a time.
+ * 
  * 
  * TODO: Partitioning the token buckets based on the endpoint or user ID to distribute the load across multiple servers.
  * - Use a consistent hashing algorithm to map endpoints or user IDs to specific servers.

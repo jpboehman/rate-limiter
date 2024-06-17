@@ -25,6 +25,13 @@ const getKey = (header, callback) => {
 };
 
 // Middleware function for authenticating with AWS Cognito
+/**
+ * Middleware function to authenticate requests using JWT token.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Object} - The response object.
+ */
 export const authMiddleware = (req, res, next) => {
     const token = req.headers.authorization;
 

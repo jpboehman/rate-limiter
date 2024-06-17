@@ -10,7 +10,7 @@ export const initializeTokenBuckets = (rateLimits) => {
 
     console.log('rateLimits: ', rateLimits);
 
-    if (!rateLimits || !Array.isArray(rateLimits)) {
+    if (!rateLimits || Array.isArray(rateLimits)) {
         throw new Error("Invalid rateLimits configuration");
     }
 
